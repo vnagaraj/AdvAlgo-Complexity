@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * EnergyValuesTest - client program to test the solution for linear equations
+ * GaussianEliminationTest - client program to test the solution for linear equations
  *
  * Problem Description
  Task. You’re looking into a restaurant menu which shows for each dish the list of ingredients with amounts and the estimated total energy value in calories. You would like to  nd out the energy values of individual ingredients (then you will be able to estimate the total energy values of your favorite dishes).
@@ -24,21 +24,27 @@ import java.util.Scanner;
  */
 
 
-public class EnergyValuesTest {
-    static RowReduce ReadEquation() throws IOException {
+public class GaussianEliminationTest {
+    static GaussianElimination ReadEquation() throws IOException {
         Scanner scanner = new Scanner(System.in);
         int size = scanner.nextInt();
 
-        double a[][] = new double[size][size+1];
+        double a[][] = new double[size][size];
+        double b[] = new double[size];
         for (int raw = 0; raw < size; ++raw) {
             for (int column = 0; column < size+1; ++column)
-                a[raw][column] = scanner.nextInt();
+                if (column == size){
+                    b[raw] = scanner.nextInt();
+                } else {
+                    a[raw][column] = scanner.nextInt();
+                }
         }
-        return new RowReduce(a);
+        return new GaussianElimination(a, b);
     }
 
 
     public static void main(String[] args) throws IOException {
-        ReadEquation();
+        ReadEquation().printResult();
     }
 }
+
