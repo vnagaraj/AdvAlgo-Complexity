@@ -4,17 +4,25 @@ package week2;
  * class to compute linear equations via Gaussian Elimination
  *
  * @author Vivekanand Ganapathy Nagarajan
- * @version 2.0 September 9th, 2016
+ * @version 3.0 September 9th, 2016
  *
  */
 
 public class GaussianElimination {
     private double[][] A; //refers to co-efficient matrix
-    private double[] b; //refers to output matrix
+    double[] b; //refers to output matrix
     boolean hasSolution = true;
 
 
     GaussianElimination(double[][] A, double[] b){
+        if (A == null || b == null){
+            hasSolution = false;
+            return;
+        }
+        if (A.length == 0 || b.length == 0){
+            hasSolution = false;
+            return;
+        }
         copyMatrix(A);
         copyMatrix(b);
         rowReduce();
@@ -26,6 +34,7 @@ public class GaussianElimination {
             int rowPivot = getRowPivot(A, row);
             if (rowPivot == -1){
                 hasSolution = false;
+                return;
             }
             if (rowPivot != row){
                 //swap rows
